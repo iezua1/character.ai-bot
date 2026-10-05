@@ -1,14 +1,13 @@
 const { Client, GatewayIntentBits, Interaction, Collection, ActivityType } = require("discord.js")
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages] });
-const config = require("./config.json") // Specifies the config file
 const fs = require("fs");
 
-// REPARACIÓN PARA RENDER: Si detecta texto genérico o vacío, usa las Variables de Entorno de Render
-if (!config.token || config.token.includes("process.env") || config.token.includes("Token")) {
-    config.token = process.env.token;
-    config.authToken = process.env.authToken;
-    config.defaultCharacter = process.env.defaultCharacter;
-}
+// ASIGNACIÓN DIRECTA DESDE LAS VARIABLES DE ENTORNO DE RENDER
+const config = {
+    token: process.env.DISCORD_TOKEN,
+    authToken: process.env.CAI_AUTH_TOKEN,
+    defaultCharacter: process.env.CAI_CHARACTER_ID
+};
 
 const { CharacterAI } = require('node_characterai');
 const characterAI = new CharacterAI();
@@ -18,7 +17,7 @@ const { Routes } = require('discord.js')
 
 // Global Vars
 client.activeChat = false;
-client.activeCharacter = config.defaultCharacter; // default character chat ID
+client.activeCharacter = config.defaultCharacter; // ID del personaje por defecto
 // --
 
 // Stuff for slash commands.
@@ -105,7 +104,7 @@ client.on("messageCreate", async message => {
 });
 
 // Interaction command handling
-client.on("interactionCreate", async interaction => {
+client.on "interactionCreate", async interaction => {
     if (interaction.isCommand()) {
         const slashCommand = client.commands.get(interaction.commandName); // Getting the right command file to execute 
         if (!slashCommand) return; // If interaction isn't a slashCommand return
@@ -118,5 +117,4 @@ client.on("interactionCreate", async interaction => {
     }
 })
 
-client.login(config.token) // connects the bot.
-
+client.login(config.token) // Conecta el bot usando el token inyectado directamente
