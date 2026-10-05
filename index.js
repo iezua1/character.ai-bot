@@ -3,6 +3,13 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 const config = require("./config.json") // Specifies the config file
 const fs = require("fs");
 
+// REPARACIÓN PARA RENDER: Si detecta texto genérico o vacío, usa las Variables de Entorno de Render
+if (!config.token || config.token.includes("process.env") || config.token.includes("Token")) {
+    config.token = process.env.token;
+    config.authToken = process.env.authToken;
+    config.defaultCharacter = process.env.defaultCharacter;
+}
+
 const { CharacterAI } = require('node_characterai');
 const characterAI = new CharacterAI();
 
@@ -112,3 +119,4 @@ client.on("interactionCreate", async interaction => {
 })
 
 client.login(config.token) // connects the bot.
+
