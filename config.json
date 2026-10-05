@@ -1,0 +1,5 @@
+{ 
+  "token": "process.env.token", 
+  "authToken": "process.env.authToken", 
+  "defaultCharacter": "process.env.defaultCharacter" 
+}
