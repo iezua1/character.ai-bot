@@ -104,7 +104,7 @@ client.on("messageCreate", async message => {
 });
 
 // Interaction command handling
-client.on "interactionCreate", async interaction => {
+client.on("interactionCreate", async interaction => {
     if (interaction.isCommand()) {
         const slashCommand = client.commands.get(interaction.commandName); // Getting the right command file to execute 
         if (!slashCommand) return; // If interaction isn't a slashCommand return
