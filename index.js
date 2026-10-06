@@ -11,6 +11,7 @@ const config = {
 
 const { CharacterAI } = require('node_characterai');
 const characterAI = new CharacterAI();
+characterAI.usePlus = false; // Bypass para resolver el error 'Could not get edge rollout' en servidores Cloud
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js')
